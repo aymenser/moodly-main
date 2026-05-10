@@ -1,0 +1,54 @@
+/* ==============================================
+   variables.css — Design tokens & theme system
+   Moodly · ING 3 Refactoring
+   ============================================== */
+
+:root {
+  /* Colors */
+  --bg: #F5F0EB;
+  --surface: #FFFFFF;
+  --text: #0A0A0A;
+  --text-muted: #6B6B6B;
+  --border: #E0D9D1;
+  --accent: #0A0A0A;
+  --accent-inv: #FFFFFF;
+  --card-bg: #FFFFFF;
+  --nav-bg: rgba(245,240,235,0.92);
+  --drawer-bg: #FFFFFF;
+
+  /* Feedback colors */
+  --badge-low: #D97706;
+  --badge-out: #9CA3AF;
+
+  /* Shadows */
+  --shadow: 0 4px 24px rgba(10,10,10,0.08);
+  --shadow-lg: 0 12px 48px rgba(10,10,10,0.14);
+
+  /* Shape */
+  --radius: 14px;
+  --radius-sm: 8px;
+
+  /* Motion (used in animations.css) */
+  --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+  --ease-spring: cubic-bezier(0.16,1,0.3,1);
+
+  /* Typography */
+  --serif: 'Playfair Display', serif;
+  --sans: 'Poppins', sans-serif;
+}
+
+/* ---- Dark mode overrides ---- */
+[data-theme="dark"] {
+  --bg: #0A0A0A;
+  --surface: #1A1A1A;
+  --text: #F5F0EB;
+  --text-muted: #9CA3AF;
+  --border: #2A2A2A;
+  --accent: #F5F0EB;
+  --accent-inv: #0A0A0A;
+  --card-bg: #1A1A1A;
+  --nav-bg: rgba(10,10,10,0.92);
+  --drawer-bg: #1A1A1A;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.6);
+}

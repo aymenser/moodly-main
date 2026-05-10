@@ -1,0 +1,132 @@
+/* ==============================================
+   animations.css — Keyframes & animated classes
+   Moodly · ING 3 Refactoring
+
+   PERF RULES:
+   · All animations use only transform and opacity (GPU composited)
+   · No animations on layout-affecting properties (width, height, top, left)
+   · Skeletons use background-position shimmer (GPU-friendly linear-gradient trick)
+   ============================================== */
+
+/* ======= HERO ENTRANCE ======= */
+.hero-tag {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s 0.2s forwards;
+}
+.hero-title .line span {
+  opacity: 0;
+  transform: translateY(100%);
+  animation: slideUp 0.9s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+.hero-title .line:nth-child(1) span { animation-delay: 0.4s; }
+.hero-title .line:nth-child(2) span { animation-delay: 0.6s; }
+
+.hero-subtitle {
+  opacity: 0;
+  animation: fadeUp 0.8s 0.8s forwards;
+}
+.hero-ctas {
+  opacity: 0;
+  animation: fadeUp 0.8s 1s forwards;
+}
+.hero-scroll {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  animation: fadeUp 1s 1.4s forwards;
+  opacity: 0;
+}
+.hero-scroll span {
+  font-size: 0.65rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+.hero-scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--text-muted), transparent);
+  animation: scrollLine 1.5s ease-in-out infinite;
+}
+
+@keyframes fadeUp  { to { opacity: 1; transform: translateY(0); } }
+@keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+
+@keyframes scrollLine {
+  0%,100% { opacity: 0; transform: scaleY(0) translateY(-100%); }
+  50%      { opacity: 1; transform: scaleY(1) translateY(0); }
+}
+
+/* ======= GRAIN OVERLAY ======= */
+body::after {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: .025;
+  pointer-events: none;
+  z-index: 9999;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%,100% { transform: translate(0,0); }
+  10%  { transform: translate(-2%,-3%); }
+  20%  { transform: translate(3%,2%); }
+  30%  { transform: translate(-1%,4%); }
+  40%  { transform: translate(3%,-1%); }
+  50%  { transform: translate(-3%,3%); }
+  60%  { transform: translate(2%,-3%); }
+  70%  { transform: translate(-2%,2%); }
+  80%  { transform: translate(3%,1%); }
+  90%  { transform: translate(-1%,-2%); }
+}
+
+/* ======= SCROLL REVEAL ======= */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ======= SKELETON SHIMMER ======= */
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.cat-skeleton {
+  flex-shrink: 0; width: 120px; height: 125px;
+  border-radius: var(--radius);
+  background: linear-gradient(90deg, var(--border) 25%, var(--surface) 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+.product-skeleton {
+  background: var(--card-bg); border-radius: var(--radius);
+  overflow: hidden; border: 1px solid var(--border);
+}
+.skeleton-img {
+  aspect-ratio: 3/4;
+  background: linear-gradient(90deg, var(--border) 25%, var(--surface) 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+.skeleton-img-label {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.skeleton-text {
+  height: 14px; border-radius: 4px; margin: 16px 16px 8px;
+  background: linear-gradient(90deg, var(--border) 25%, var(--surface) 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+.skeleton-text.short { width: 60%; }

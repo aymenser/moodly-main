@@ -1,0 +1,15 @@
+/* ==============================================
+   main.css — Central CSS entry point
+   Moodly · ING 3 Refactoring
+
+   Import order matters:
+   1. variables  → tokens available to all
+   2. animations → keyframes declared early
+   3. layout     → structural skeleton
+   4. components → UI elements built on top
+   ============================================== */
+
+@import url('./variables.css');
+@import url('./animations.css');
+@import url('./layout.css');
+@import url('./components.css');

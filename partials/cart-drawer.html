@@ -1,0 +1,25 @@
+<!-- ==================== CART DRAWER ==================== -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="drawer-header">
+    <h2>Mon panier</h2>
+    <button class="drawer-close" onclick="closeCart()">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body" id="cartItems"></div>
+  <div class="drawer-footer">
+    <div class="promo-input-wrap">
+      <input class="promo-input" type="text" placeholder="Code promo">
+      <button class="promo-apply" onclick="showToast('Code appliqué !')">Appliquer</button>
+    </div>
+    <div class="subtotal-row">
+      <span class="subtotal-label">Total</span>
+      <span class="subtotal-val" id="cartSubtotal">0 DA</span>
+    </div>
+    <button class="checkout-btn" onclick="showToast('Commande passée ! On vous contacte bientôt.')">
+      <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      Commander maintenant
+    </button>
+    <button class="continue-shop-btn" onclick="closeCart()">Continuer mes achats</button>
+  </div>
+</div>

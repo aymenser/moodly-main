@@ -1,0 +1,51 @@
+<!-- Mobile filter drawer -->
+<div class="mobile-filter-drawer" id="mobileFilterDrawer">
+  <div class="mobile-filter-drawer-header">
+    <h3>Filtres</h3>
+    <button class="drawer-close" onclick="closeMobileFilter()">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-filter-drawer-body">
+    <div class="filter-group">
+      <h4>Catégorie</h4>
+      <div id="mobileFilterCats">
+        <label class="filter-check"><input type="checkbox" checked> Tout</label>
+      </div>
+    </div>
+    <div class="filter-group">
+      <h4>Taille</h4>
+      <div class="size-grid">
+        <button class="size-chip" onclick="this.classList.toggle('active')">XS</button>
+        <button class="size-chip" onclick="this.classList.toggle('active')">S</button>
+        <button class="size-chip" onclick="this.classList.toggle('active')">M</button>
+        <button class="size-chip" onclick="this.classList.toggle('active')">L</button>
+        <button class="size-chip" onclick="this.classList.toggle('active')">XL</button>
+        <button class="size-chip" onclick="this.classList.toggle('active')">XXL</button>
+      </div>
+    </div>
+    <div class="filter-group">
+      <div class="filter-title-row">
+        <h4>Couleur</h4>
+        <button class="filter-reset-btn" type="button" onclick="window.__resetColorFilters?.()">Réinitialiser</button>
+      </div>
+      <div class="color-swatches" id="mobileColorFilters">
+        <span class="filter-loading">Chargement...</span>
+      </div>
+    </div>
+    <div class="filter-group">
+      <h4>Prix maximum (DA)</h4>
+      <div class="price-slider-wrap">
+        <input id="mobilePriceMaxRange" data-filter="max-price" type="range" class="price-slider" min="0" max="15000" value="15000"
+          oninput="document.getElementById('mobilePriceVal').textContent=Number(this.value).toLocaleString('fr-DZ')">
+        <div class="price-range-labels">
+          <span>0 DA</span>
+          <span id="mobilePriceVal">15 000 DA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mobile-filter-footer">
+    <button class="apply-btn" onclick="applySidebarFilter();closeMobileFilter()">Appliquer les filtres</button>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="toast" id="toast"><span id="toastMsg"></span></div>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#" data-nav="home" onclick="showHome();closeMobileMenu()">Accueil</a></li>
+    <li><a href="#" data-nav="shop" onclick="showShop();closeMobileMenu()">Boutique</a></li>
+    <li><a href="#" data-nav="nouveautes" onclick="window.__scrollToSection('nouveautes');closeMobileMenu()">Nouveautés</a></li>
+    <li><a href="#" data-nav="histoire" onclick="window.__scrollToSection('histoire');closeMobileMenu()">À propos</a></li>
+    <li><a href="#" data-auth-link="true" onclick="openAuthModal();closeMobileMenu()">Connexion</a></li>
+  </ul>
+</div>

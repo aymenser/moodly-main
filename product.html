@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moodly — Produit</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/product-page.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/runtime-config.js"></script>
+</head>
+<body>
+  <header class="pp-header">
+    <button class="pp-back" type="button" onclick="goBackToStore()" aria-label="Retour">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="pp-brand">Moodly</div>
+    <div class="pp-header-actions">
+      <button class="pp-icon-btn" id="ppWishBtn" type="button" onclick="toggleWish()" aria-label="Favori">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <button class="pp-icon-btn" type="button" onclick="shareProduct()" aria-label="Partager">
+        <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="pp-gallery" id="ppGallery">
+      <div class="pp-slides" id="ppSlides"></div>
+      <div class="pp-dots" id="ppDots"></div>
+      <div class="pp-badge" id="ppBadge"></div>
+      <div class="pp-swipe-hint" id="ppSwipeHint">Glisser</div>
+    </section>
+
+    <section class="pp-body">
+      <div class="pp-top-row">
+        <div class="pp-category" id="ppCategory">Collection 2026</div>
+        <div class="pp-stars" id="ppStars">★★★★★ <span>4.5</span></div>
+      </div>
+
+      <h1 class="pp-name" id="ppName">Produit</h1>
+      <div class="pp-price-row">
+        <div class="pp-price" id="ppPrice">0 DA</div>
+        <div class="pp-price-old" id="ppPriceOld"></div>
+        <div class="pp-price-tag" id="ppPriceTag"></div>
+      </div>
+      <p class="pp-desc" id="ppDesc"></p>
+
+      <div class="pp-divider"></div>
+
+      <section class="pp-section">
+        <div class="pp-section-header">
+          <span class="pp-label">Couleur</span>
+          <span class="pp-selected-val" id="ppSelectedColor">—</span>
+        </div>
+        <div class="pp-colors" id="ppColors"></div>
+        <p class="pp-option-help" id="ppColorHelp"></p>
+      </section>
+
+      <section class="pp-section">
+        <div class="pp-section-header">
+          <span class="pp-label">Taille</span>
+          <button class="pp-guide-btn" type="button" onclick="openSizeGuide()">Guide des tailles</button>
+        </div>
+        <div class="pp-sizes" id="ppSizes"></div>
+        <p class="pp-stock-state" id="ppStockState"></p>
+      </section>
+
+      <section class="pp-section">
+        <div class="pp-section-header">
+          <span class="pp-label">Quantité</span>
+        </div>
+        <div class="pp-qty">
+          <button class="pp-qty-btn" id="ppQtyMinus" type="button" onclick="changeQty(-1)">−</button>
+          <span class="pp-qty-val" id="ppQty">1</span>
+          <button class="pp-qty-btn" id="ppQtyPlus" type="button" onclick="changeQty(1)">+</button>
+        </div>
+      </section>
+
+      <div class="pp-divider"></div>
+
+      <section class="pp-delivery">
+        <div class="pp-delivery-item">
+          <div class="pp-delivery-icon">↗</div>
+          <div>
+            <div class="pp-delivery-title">Livraison en Algérie</div>
+            <div class="pp-delivery-sub">Préparation rapide après confirmation.</div>
+          </div>
+        </div>
+        <div class="pp-delivery-item">
+          <div class="pp-delivery-icon">✓</div>
+          <div>
+            <div class="pp-delivery-title">Paiement à la livraison</div>
+            <div class="pp-delivery-sub">Commande sécurisée via votre compte Moodly.</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="pp-divider"></div>
+
+      <section class="pp-reviews" id="ppReviews">
+        <h2 class="pp-also-title">Avis clients</h2>
+        <div id="ppReviewsContent"></div>
+      </section>
+
+      <div class="pp-divider"></div>
+
+      <section class="pp-also">
+        <h2 class="pp-also-title">Vous aimerez aussi</h2>
+        <div class="pp-also-scroll" id="ppAlsoScroll"></div>
+      </section>
+    </section>
+  </main>
+
+  <div class="pp-cta-bar">
+    <button class="pp-btn-wish-sm" id="ppCtaWish" type="button" onclick="toggleWish()" aria-label="Favori">
+      <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </button>
+    <button class="pp-btn-cart" id="ppCartBtn" type="button" onclick="addToCart()">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      Ajouter au panier
+    </button>
+  </div>
+
+  <div class="pp-toast" id="ppToast"></div>
+
+  <div class="pp-sheet-overlay" id="ppSizeSheet">
+    <div class="pp-sheet">
+      <div class="pp-sheet-header">
+        <h3>Guide des tailles</h3>
+        <button class="pp-sheet-close" type="button" onclick="closeSizeGuide()">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="pp-sheet-body">
+        <table class="pp-size-table">
+          <thead><tr><th>Taille</th><th>Conseil</th></tr></thead>
+          <tbody>
+            <tr><td>S</td><td>Coupe petite</td></tr>
+            <tr><td>M</td><td>Coupe standard</td></tr>
+            <tr><td>L</td><td>Coupe large</td></tr>
+            <tr><td>XL</td><td>Coupe très large</td></tr>
+          </tbody>
+        </table>
+        <p class="pp-size-note">Les tailles viennent du stock réel du produit. Si une taille manque, elle n'est pas disponible pour ce produit.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="drawer-header">
+      <h2>Mon panier</h2>
+      <button class="drawer-close" onclick="closeCart()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="drawer-body" id="cartItems"></div>
+    <div class="drawer-footer">
+      <div class="subtotal-row"><span class="subtotal-label">Total</span><span class="subtotal-val" id="cartSubtotal">0 DA</span></div>
+      <button class="continue-shop-btn" onclick="closeCart()">Continuer mes achats</button>
+    </div>
+  </div>
+
+  <div class="wishlist-drawer" id="wishlistDrawer">
+    <div class="drawer-header">
+      <h2>Mes favoris</h2>
+      <button class="drawer-close" onclick="closeWishlist()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="wishlist-tagline" id="wishlistTagline">Vos favoris sauvegardés.</div>
+    <div class="drawer-body" id="wishlistItems"></div>
+    <div class="drawer-footer"><button class="continue-shop-btn" onclick="closeWishlist()">Continuer mes achats</button></div>
+  </div>
+
+  <div class="profile-drawer" id="profileDrawer">
+    <div class="drawer-header">
+      <h2>Mon espace</h2>
+      <button class="drawer-close" onclick="closeProfile()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div id="profileContent"></div>
+  </div>
+
+  <div class="auth-modal-overlay" id="authModal">
+    <div class="auth-modal">
+      <button class="auth-modal-close" onclick="closeAuthModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <h2>Bon retour !</h2>
+      <p>Connectez-vous pour accéder à vos favoris et commandes.</p>
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="authTabSignin" onclick="switchModalTab('signin')">Se connecter</button>
+        <button class="auth-tab" id="authTabSignup" onclick="switchModalTab('signup')">S'inscrire</button>
+      </div>
+      <div class="auth-form" id="modalSigninForm">
+        <input class="form-input" type="email" placeholder="Votre email">
+        <input class="form-input" type="password" placeholder="Mot de passe">
+        <button class="auth-submit" onclick="doLoginProfile()">Se connecter</button>
+      </div>
+      <div class="auth-form" id="modalSignupForm" style="display:none;">
+        <input class="form-input" type="text" placeholder="Votre prénom">
+        <input class="form-input" type="email" placeholder="Votre email">
+        <input class="form-input" type="password" placeholder="Mot de passe">
+        <button class="auth-submit" onclick="doSignupProfile()">Créer mon compte</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="bottom-nav-btn" id="bnHome" onclick="goToHome()"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Accueil</span><span class="bottom-nav-dot"></span></button>
+    <button class="bottom-nav-btn active" id="bnExplore" onclick="goToShop()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Explorer</span><span class="bottom-nav-dot"></span></button>
+    <button class="bottom-nav-btn" id="bnWish" onclick="goToWishlist()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Favoris</span><span class="bottom-nav-dot"></span><span class="bottom-cart-badge" id="wishBadgeMobile"></span></button>
+    <button class="bottom-nav-btn" id="bnCart" onclick="goToCart()"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span>Panier</span><span class="bottom-nav-dot"></span><span class="bottom-cart-badge" id="cartBadgeMobile">0</span></button>
+    <button class="bottom-nav-btn" id="bnProfile" onclick="goToProfile()"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Moi</span><span class="bottom-nav-dot"></span></button>
+  </div>
+
+  <script src="js/config-standalone.js" defer></script>
+  <script src="js/product-page.js" defer></script>
+</body>
+</html>

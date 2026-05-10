@@ -1,0 +1,75 @@
+<!-- ==================== SHOP PAGE ==================== -->
+<div id="shopPage">
+  <div class="shop-page-header">
+    <button class="back-btn" onclick="showHome()">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Retour
+    </button>
+    <h1>Toute la collection</h1>
+    <p>Découvrez tous nos articles — filtrez par taille, couleur et prix.</p>
+  </div>
+  <div class="shop-layout">
+    <aside class="sidebar">
+      <h3>Filtres</h3>
+      <div class="filter-group">
+        <h4>Catégorie</h4>
+        <div id="categoryFilters">
+          <label class="filter-check"><input type="checkbox" checked> Tout</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <h4>Taille</h4>
+        <div class="size-grid">
+          <button class="size-chip" onclick="this.classList.toggle('active');filterProducts()">XS</button>
+          <button class="size-chip" onclick="this.classList.toggle('active');filterProducts()">S</button>
+          <button class="size-chip" onclick="this.classList.toggle('active');filterProducts()">M</button>
+          <button class="size-chip" onclick="this.classList.toggle('active');filterProducts()">L</button>
+          <button class="size-chip" onclick="this.classList.toggle('active');filterProducts()">XL</button>
+          <button class="size-chip" onclick="this.classList.toggle('active');filterProducts()">XXL</button>
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-title-row">
+          <h4>Couleur</h4>
+          <button class="filter-reset-btn" type="button" onclick="window.__resetColorFilters?.()">Réinitialiser</button>
+        </div>
+        <div class="color-swatches" id="dynamicColorFilters">
+          <span class="filter-loading">Chargement...</span>
+        </div>
+      </div>
+      <div class="filter-group">
+        <h4>Prix maximum (DA)</h4>
+        <div class="price-slider-wrap">
+          <input id="priceMaxRange" data-filter="max-price" type="range" class="price-slider" min="0" max="15000" value="15000"
+            oninput="document.getElementById('priceVal').textContent=Number(this.value).toLocaleString('fr-DZ');filterProducts()">
+          <div class="price-range-labels">
+            <span>0 DA</span>
+            <span id="priceVal">15 000 DA</span>
+          </div>
+        </div>
+      </div>
+      <button class="apply-btn" onclick="applySidebarFilter()">Appliquer les filtres</button>
+    </aside>
+
+    <div>
+      <div class="shop-top-panel">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+          <input type="text" placeholder="Rechercher un article..." id="shopSearchInput" oninput="filterProducts()">
+        </div>
+        <button class="mobile-filter-btn" onclick="openMobileFilter()">
+          <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+          Filtres
+        </button>
+        <select class="sort-select" id="shopSort" onchange="filterProducts()">
+          <option>Nouveautés</option>
+          <option>Prix croissant</option>
+          <option>Prix décroissant</option>
+          <option>Meilleures ventes</option>
+        </select>
+        <span class="results-count" id="resultsCount">Chargement...</span>
+      </div>
+      <div class="product-grid-shop" id="shopProductGrid"></div>
+    </div>
+  </div>
+</div>

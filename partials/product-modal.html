@@ -1,0 +1,42 @@
+<!-- ==================== PRODUCT MODAL (desktop only) ==================== -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="modal-gallery">
+      <div class="modal-gallery-main" id="modalImg" style="width:100%;height:100%;min-height:450px;"></div>
+      <div class="modal-dots" id="modalDots"></div>
+    </div>
+    <div class="modal-info">
+      <h2 id="modalName"></h2>
+      <div class="modal-price" id="modalPrice"></div>
+      <div class="modal-stars" id="modalStars">★★★★☆ <span>4.3 (28 avis)</span></div>
+      <div class="modal-label">Couleur</div>
+      <div class="modal-colors" id="modalColors"></div>
+      <div class="modal-label">Taille</div>
+      <div class="modal-sizes" id="modalSizes"></div>
+      <div class="modal-label">Quantité</div>
+      <div class="qty-ctrl">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <span class="qty-val" id="qtyVal">1</span>
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+      <p class="stock-state" id="modalStockMessage"></p>
+      <button class="modal-add-cart" onclick="addToCartFromModal()">
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        Ajouter au panier
+      </button>
+      <button class="modal-add-wish" id="modalWishBtn" onclick="toggleModalWish()">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Ajouter aux favoris
+      </button>
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-reviews" id="modalReviews"></div>
+      <div class="also-like">
+        <h4>Vous aimerez aussi</h4>
+        <div class="also-scroll" id="alsoLike"></div>
+      </div>
+    </div>
+  </div>
+</div>

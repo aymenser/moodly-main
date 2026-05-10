@@ -1,0 +1,25 @@
+<!-- ==================== AUTH MODAL ==================== -->
+<div class="auth-modal-overlay" id="authModal">
+  <div class="auth-modal">
+    <button class="auth-modal-close" onclick="closeAuthModal()">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <h2 id="authModalTitle">Bon retour !</h2>
+    <p id="authModalSub">Connectez-vous pour accéder à vos favoris et commandes.</p>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="authTabSignin" onclick="switchModalTab('signin')">Se connecter</button>
+      <button class="auth-tab" id="authTabSignup" onclick="switchModalTab('signup')">S'inscrire</button>
+    </div>
+    <div class="auth-form" id="modalSigninForm">
+      <input class="form-input" type="email" placeholder="Votre email">
+      <input class="form-input" type="password" placeholder="Mot de passe">
+      <button class="auth-submit" onclick="window.__doLogin()">Se connecter</button>
+    </div>
+    <div class="auth-form" id="modalSignupForm" style="display:none;">
+      <input class="form-input" type="text" placeholder="Votre prénom">
+      <input class="form-input" type="email" placeholder="Votre email">
+      <input class="form-input" type="password" placeholder="Mot de passe">
+      <button class="auth-submit" onclick="window.__doSignup()">Créer mon compte</button>
+    </div>
+  </div>
+</div>
