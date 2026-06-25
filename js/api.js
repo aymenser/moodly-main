@@ -179,12 +179,12 @@ function normalizeVariant(variant = {}) {
 function getProductSizes(variants) {
   const seen = new Set();
   return variants
-    .filter((variant) => {
-      if (!variant.size || seen.has(variant.size)) return false;
-      seen.add(variant.size);
-      return true;
-    })
-    .map((variant) => variant.size);
+      .filter((variant) => {
+        if (!variant.size || seen.has(variant.size)) return false;
+        seen.add(variant.size);
+        return true;
+      })
+      .map((variant) => variant.size);
 }
 
 function getProductColors(variants) {
@@ -313,8 +313,8 @@ export function shapeProduct(product, images = [], variants = [], reviews = []) 
   const sizes = getProductSizes(normalizedVariants);
   const totalStock = normalizedVariants.reduce((sum, variant) => sum + variant.stockQuantity, 0);
   const avgRating = normalizedReviews.length
-    ? normalizedReviews.reduce((sum, review) => sum + normalizeNumber(review.rating, 0), 0) / normalizedReviews.length
-    : 4.5;
+      ? normalizedReviews.reduce((sum, review) => sum + normalizeNumber(review.rating, 0), 0) / normalizedReviews.length
+      : 4.5;
 
   let badge = null;
   if (totalStock === 0) badge = 'out';
@@ -369,17 +369,17 @@ export async function fetchProducts(categoryId = null) {
 
   const activeProducts = products.filter((product) => product.isActive ?? product.is_active ?? true);
   const filteredProducts = categoryId
-    ? activeProducts.filter((product) => String(product.category?.id || product.categoryId || product.category_id) === String(categoryId))
-    : activeProducts;
+      ? activeProducts.filter((product) => String(product.category?.id || product.categoryId || product.category_id) === String(categoryId))
+      : activeProducts;
 
   // Four total requests instead of 2 requests per product. This is the biggest frontend lag reduction.
   return filteredProducts.map((product) => {
     const productId = String(product.id);
     return shapeProduct(
-      product,
-      imagesByProduct[productId] || [],
-      variantsByProduct[productId] || [],
-      reviewsByProduct[productId] || [],
+        product,
+        imagesByProduct[productId] || [],
+        variantsByProduct[productId] || [],
+        reviewsByProduct[productId] || [],
     );
   });
 }
@@ -405,21 +405,21 @@ export async function removeWishlistItem(wishlistId) {
 
 export function normalizeWishlistItems(wishlistRows, allProducts) {
   return wishlistRows
-    .map((item) => {
-      const productId = item.product?.id || item.productId || item.product_id;
-      const product = allProducts.find((candidate) => String(candidate.id) === String(productId)) || item.product;
-      if (!product) return null;
+      .map((item) => {
+        const productId = item.product?.id || item.productId || item.product_id;
+        const product = allProducts.find((candidate) => String(candidate.id) === String(productId)) || item.product;
+        if (!product) return null;
 
-      const shaped = product.variants
-        ? product
-        : shapeProduct(product, product.productImages || product.product_images || [], product.productVariants || product.product_variants || [], []);
+        const shaped = product.variants
+            ? product
+            : shapeProduct(product, product.productImages || product.product_images || [], product.productVariants || product.product_variants || [], []);
 
-      return {
-        ...shaped,
-        wishlistId: item.id,
-      };
-    })
-    .filter(Boolean);
+        return {
+          ...shaped,
+          wishlistId: item.id,
+        };
+      })
+      .filter(Boolean);
 }
 
 // ---- Cart / order ----
@@ -533,76 +533,9 @@ export async function submitProductReview({ reviewId = null, profileId = current
   };
 
   const result = reviewId
-    ? await apiFetch(`/reviews/${reviewId}`, { method: 'PUT', body: JSON.stringify(payload) })
-    : await apiFetch('/reviews', { method: 'POST', body: JSON.stringify(payload) });
+      ? await apiFetch(`/reviews/${reviewId}`, { method: 'PUT', body: JSON.stringify(payload) })
+      : await apiFetch('/reviews', { method: 'POST', body: JSON.stringify(payload) });
 
   reviewsCache = null;
   return result;
-}
-
-export const COLOR_HEX_MAP = {
-  noir: '#1a1a1a', black: '#1a1a1a', noire: '#1a1a1a',
-  blanc: '#f0ece8', white: '#f0ece8', blanche: '#f0ece8',
-  rose: '#e8909e', pink: '#e8909e',
-  bleu: '#7aa8c8', blue: '#7aa8c8',
-  camel: '#d4a07a', marron: '#b07845', brown: '#b07845',
-  kaki: '#8aab88', vert: '#5a7a58', green: '#5a7a58',
-  beige: '#e8d8c0', crème: '#e8d8c0', creme: '#e8d8c0',
-  bordeaux: '#a05070', rouge: '#ef4444', red: '#ef4444',
-  gris: '#9a9a9a', grey: '#9a9a9a', gray: '#9a9a9a',
-};
-
-export const GRADIENT_MAP = {
-  noir: 'linear-gradient(135deg,#1a1a1a,#3a3a3a)',
-  blanc: 'linear-gradient(135deg,#f0ece8,#e0dbd5)',
-  rose: 'linear-gradient(135deg,#f0b8c0,#e8909e)',
-  bleu: 'linear-gradient(135deg,#7aa8c8,#4d7fa8)',
-  camel: 'linear-gradient(135deg,#d4a07a,#b07845)',
-  vert: 'linear-gradient(135deg,#8aab88,#5a7a58)',
-  beige: 'linear-gradient(135deg,#e8d8c0,#d4c0a0)',
-  bordeaux: 'linear-gradient(135deg,#a05070,#7a3050)',
-  default: 'linear-gradient(135deg,#c9b8a8,#a89080)',
-};
-
-export function colorToHex(colorName) {
-  const normalized = normalizeText(colorName);
-  for (const [key, value] of Object.entries(COLOR_HEX_MAP)) {
-    if (normalized.includes(key)) return value;
-  }
-  return '#ccc';
-}
-
-export function gradientForColor(colorName) {
-  const normalized = normalizeText(colorName);
-  if (normalized.includes('noir') || normalized.includes('black')) return GRADIENT_MAP.noir;
-  if (normalized.includes('blanc') || normalized.includes('white')) return GRADIENT_MAP.blanc;
-  if (normalized.includes('rose') || normalized.includes('pink')) return GRADIENT_MAP.rose;
-  if (normalized.includes('bleu') || normalized.includes('blue')) return GRADIENT_MAP.bleu;
-  if (normalized.includes('camel') || normalized.includes('marron') || normalized.includes('brown')) return GRADIENT_MAP.camel;
-  if (normalized.includes('vert') || normalized.includes('kaki') || normalized.includes('green')) return GRADIENT_MAP.vert;
-  if (normalized.includes('beige') || normalized.includes('creme') || normalized.includes('crème')) return GRADIENT_MAP.beige;
-  if (normalized.includes('borde') || normalized.includes('rouge') || normalized.includes('red')) return GRADIENT_MAP.bordeaux;
-  if (String(colorName).startsWith('#')) return `linear-gradient(135deg,${colorName},${colorName}cc)`;
-  return GRADIENT_MAP.default;
-}
-
-// ---- Export shapeProduct for product page ----
-export function shapeProductForPage(product, images = [], variants = [], reviews = []) {
-  // Re-export the existing shapeProduct with product-page specific enhancements
-  return shapeProduct(product, images, variants, reviews);
-}
-
-// ---- Export review/order helpers for product page ----
-export function normalizeImageUrl(value = '') {
-  const url = String(value || '').trim();
-  if (!url) return '';
-  if (/^(https?:)?\/\//i.test(url)) return url;
-  if (/^(data:|blob:)/i.test(url)) return url;
-  if (url.startsWith('/') || url.startsWith('./') || url.startsWith('../')) return url;
-  if (url.startsWith('assets/')) return url;
-  return '';
-}
-
-export function normalizeReviewForProduct(review = {}) {
-  return normalizeReview(review);
 }

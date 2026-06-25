@@ -60,19 +60,19 @@ function byId(id) {
 
 function escapeHtml(value = '') {
   return String(value)
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#039;');
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
 }
 
 function normalizeText(value = '') {
   return String(value)
-    .trim()
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
 }
 
 function uniqueBy(list, getKey) {
@@ -176,18 +176,18 @@ function normalizeReview(review = {}) {
 
 function shapeProduct(rawProduct, images = [], variants = [], reviews = []) {
   const normalizedVariants = (variants.length ? variants : rawProduct.variants || rawProduct.product_variants || [])
-    .map(normalizeVariant);
+      .map(normalizeVariant);
   const normalizedImages = (images.length ? images : rawProduct.images || rawProduct.productImages || rawProduct.product_images || [])
-    .map(normalizeImage)
-    .filter((image) => image.imageUrl);
+      .map(normalizeImage)
+      .filter((image) => image.imageUrl);
   const normalizedReviews = (reviews.length ? reviews : rawProduct.reviewsList || rawProduct.product_reviews || [])
-    .map(normalizeReview);
+      .map(normalizeReview);
   const colorVariants = uniqueBy(normalizedVariants, (variant) => normalizeText(variant.color));
   const sizeVariants = uniqueBy(normalizedVariants, (variant) => normalizeText(variant.size));
   const totalStock = normalizedVariants.reduce((sum, variant) => sum + number(variant.stockQuantity), 0);
   const averageRating = normalizedReviews.length
-    ? normalizedReviews.reduce((sum, review) => sum + review.rating, 0) / normalizedReviews.length
-    : number(rawProduct.rating, 4.5);
+      ? normalizedReviews.reduce((sum, review) => sum + review.rating, 0) / normalizedReviews.length
+      : number(rawProduct.rating, 4.5);
 
   let badge = rawProduct.badge || null;
   if (totalStock <= 0) badge = 'out';
@@ -410,8 +410,8 @@ async function initAuth() {
     window.sbClient.auth.onAuthStateChange(async (_event, session) => {
       ppCurrentUser = session?.user || null;
       ppSpringProfile = ppCurrentUser?.email
-        ? await ppApi(`/profiles/email/${encodeURIComponent(ppCurrentUser.email)}`).catch(() => null)
-        : null;
+          ? await ppApi(`/profiles/email/${encodeURIComponent(ppCurrentUser.email)}`).catch(() => null)
+          : null;
       if (byId('profileDrawer')?.classList.contains('open')) renderProfileDrawer();
       await syncBackendState();
     });
@@ -637,7 +637,7 @@ function productImages() {
 
   add(product.imageUrl);
   [product.images, product.productImages, product.product_images, product.raw?.images, product.raw?.productImages, product.raw?.product_images]
-    .forEach((source) => Array.isArray(source) && source.forEach(add));
+      .forEach((source) => Array.isArray(source) && source.forEach(add));
 
   if (images.length) {
     return images.map((src) => `<img src="${escapeHtml(src)}" alt="${escapeHtml(product.name)}" loading="eager" decoding="async">`);
@@ -689,16 +689,16 @@ function variantsForSize(size) {
 
 function availableVariantFor(color, size) {
   return (product.variants || []).find((variant) => (
-    normalizeText(variant.color) === normalizeText(color) &&
-    normalizeText(variant.size) === normalizeText(size) &&
-    number(variant.stockQuantity) > 0
+      normalizeText(variant.color) === normalizeText(color) &&
+      normalizeText(variant.size) === normalizeText(size) &&
+      number(variant.stockQuantity) > 0
   ));
 }
 
 function selectedVariant() {
   return (product.variants || []).find((variant) => (
-    normalizeText(variant.color) === normalizeText(selectedColor || 'Default') &&
-    normalizeText(variant.size) === normalizeText(selectedSize || 'Default')
+      normalizeText(variant.color) === normalizeText(selectedColor || 'Default') &&
+      normalizeText(variant.size) === normalizeText(selectedSize || 'Default')
   )) || null;
 }
 
@@ -819,8 +819,8 @@ function updateStockUi() {
     cartBtn.disabled = false;
     cartBtn.classList.toggle('disabled', disabled);
     cartBtn.innerHTML = disabled
-      ? `<svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> M’alerter`
-      : `<svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> Ajouter au panier`;
+        ? `<svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> M’alerter`
+        : `<svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> Ajouter au panier`;
   }
 
   if (stock > 0 && qty > stock) {
@@ -861,13 +861,13 @@ function renderAlsoLike() {
   const container = byId('ppAlsoScroll');
   if (!container) return;
   const products = (allProducts.length ? allProducts : getDemoRelated())
-    .filter((item) => String(item.id) !== String(product.id))
-    .slice(0, 8);
+      .filter((item) => String(item.id) !== String(product.id))
+      .slice(0, 8);
 
   container.innerHTML = products.map((item) => {
     const imageStyle = item.imageUrl
-      ? `background-image:url('${escapeHtml(item.imageUrl)}')`
-      : `background:${gradientForColor(item.colorNames?.[0] || item.colors?.[0] || 'rose')}`;
+        ? `background-image:url('${escapeHtml(item.imageUrl)}')`
+        : `background:${gradientForColor(item.colorNames?.[0] || item.colors?.[0] || 'rose')}`;
     return `
       <a class="pp-also-card" href="product.html?p=${encodeURIComponent(item.id)}" onclick="openRelatedProduct(event,'${escapeHtml(item.id)}')">
         <div class="pp-also-img" style="${imageStyle}"></div>
@@ -959,8 +959,8 @@ function normalizeCartItems(order) {
     const localProduct = allProducts.find((candidate) => String(candidate.id) === String(productId));
     const rawProduct = localProduct || variant.product || {};
     const shaped = rawProduct.variants || rawProduct.images
-      ? rawProduct
-      : shapeProduct(rawProduct, rawProduct.productImages || rawProduct.product_images || [], rawProduct.productVariants || rawProduct.product_variants || [], []);
+        ? rawProduct
+        : shapeProduct(rawProduct, rawProduct.productImages || rawProduct.product_images || [], rawProduct.productVariants || rawProduct.product_variants || [], []);
 
     return {
       id: shaped.id || productId || item.id,
