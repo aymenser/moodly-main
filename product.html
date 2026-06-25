@@ -152,11 +152,24 @@
   <div class="cart-drawer" id="cartDrawer">
     <div class="drawer-header">
       <h2>Mon panier</h2>
-      <button class="drawer-close" onclick="closeCart()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <button class="drawer-close" onclick="closeCart()">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
     <div class="drawer-body" id="cartItems"></div>
     <div class="drawer-footer">
-      <div class="subtotal-row"><span class="subtotal-label">Total</span><span class="subtotal-val" id="cartSubtotal">0 DA</span></div>
+      <div class="promo-input-wrap">
+        <input class="promo-input" type="text" placeholder="Code promo">
+        <button class="promo-apply" onclick="showToast('Code appliqué !')">Appliquer</button>
+      </div>
+      <div class="subtotal-row">
+        <span class="subtotal-label">Total</span>
+        <span class="subtotal-val" id="cartSubtotal">0 DA</span>
+      </div>
+      <button class="checkout-btn" onclick="showToast('Commande passée ! On vous contacte bientôt.')">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        Commander maintenant
+      </button>
       <button class="continue-shop-btn" onclick="closeCart()">Continuer mes achats</button>
     </div>
   </div>
@@ -164,24 +177,34 @@
   <div class="wishlist-drawer" id="wishlistDrawer">
     <div class="drawer-header">
       <h2>Mes favoris</h2>
-      <button class="drawer-close" onclick="closeWishlist()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <button class="drawer-close" onclick="closeWishlist()">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
-    <div class="wishlist-tagline" id="wishlistTagline">Vos favoris sauvegardés.</div>
+    <div class="wishlist-tagline" id="wishlistTagline">
+      "Chérie, arrête de regarder et commande ! Ces pièces t'attendent depuis trop longtemps..."
+    </div>
     <div class="drawer-body" id="wishlistItems"></div>
-    <div class="drawer-footer"><button class="continue-shop-btn" onclick="closeWishlist()">Continuer mes achats</button></div>
+    <div class="drawer-footer">
+      <button class="continue-shop-btn" onclick="closeWishlist()">Continuer mes achats</button>
+    </div>
   </div>
 
   <div class="profile-drawer" id="profileDrawer">
     <div class="drawer-header">
       <h2>Mon espace</h2>
-      <button class="drawer-close" onclick="closeProfile()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <button class="drawer-close" onclick="closeProfile()">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
     <div id="profileContent"></div>
   </div>
 
   <div class="auth-modal-overlay" id="authModal">
     <div class="auth-modal">
-      <button class="auth-modal-close" onclick="closeAuthModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <button class="auth-modal-close" onclick="closeAuthModal()">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
       <h2>Bon retour !</h2>
       <p>Connectez-vous pour accéder à vos favoris et commandes.</p>
       <div class="auth-tabs">
@@ -203,11 +226,33 @@
   </div>
 
   <div class="bottom-nav">
-    <button class="bottom-nav-btn" id="bnHome" onclick="goToHome()"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Accueil</span><span class="bottom-nav-dot"></span></button>
-    <button class="bottom-nav-btn active" id="bnExplore" onclick="goToShop()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Explorer</span><span class="bottom-nav-dot"></span></button>
-    <button class="bottom-nav-btn" id="bnWish" onclick="goToWishlist()"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Favoris</span><span class="bottom-nav-dot"></span><span class="bottom-cart-badge" id="wishBadgeMobile"></span></button>
-    <button class="bottom-nav-btn" id="bnCart" onclick="goToCart()"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span>Panier</span><span class="bottom-nav-dot"></span><span class="bottom-cart-badge" id="cartBadgeMobile">0</span></button>
-    <button class="bottom-nav-btn" id="bnProfile" onclick="goToProfile()"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Moi</span><span class="bottom-nav-dot"></span></button>
+    <button class="bottom-nav-btn" id="bnHome" onclick="goToHome()">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Accueil</span>
+      <span class="bottom-nav-dot"></span>
+    </button>
+    <button class="bottom-nav-btn active" id="bnExplore" onclick="goToShop()">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span>Explorer</span>
+      <span class="bottom-nav-dot"></span>
+    </button>
+    <button class="bottom-nav-btn" id="bnWish" onclick="openWishlist()">
+      <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <span>Favoris</span>
+      <span class="bottom-nav-dot"></span>
+      <span class="bottom-cart-badge" id="wishBadgeMobile"></span>
+    </button>
+    <button class="bottom-nav-btn" id="bnCart" onclick="openCart()">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span>Panier</span>
+      <span class="bottom-nav-dot"></span>
+      <span class="bottom-cart-badge" id="cartBadgeMobile">0</span>
+    </button>
+    <button class="bottom-nav-btn" id="bnProfile" onclick="openProfile()">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Moi</span>
+      <span class="bottom-nav-dot"></span>
+    </button>
   </div>
 
   <script src="js/config-standalone.js" defer></script>
