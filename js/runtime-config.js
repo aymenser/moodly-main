@@ -14,8 +14,8 @@
   const LOCAL_STOREFRONT_URL = 'http://localhost:5500';
 
   const PRODUCTION_API_BASE = 'https://moodly-api-backend.onrender.com/api';
-  const PRODUCTION_ADMIN_APP_URL = 'https://REPLACE_WITH_ADMIN_URL';
-  const PRODUCTION_STOREFRONT_URL = 'https://REPLACE_WITH_STOREFRONT_URL';
+  const PRODUCTION_ADMIN_APP_URL = 'https://admin-moodly.vercel.app';
+  const PRODUCTION_STOREFRONT_URL = 'https://moodly-main.vercel.app';
 
   window.MOODLY_CONFIG = {
     API_BASE: isLocal ? LOCAL_API_BASE : PRODUCTION_API_BASE,
